@@ -14,7 +14,7 @@ echo "*     NULL3N & E1NSEN SD CARD IMAGE SETUP    *"
 echo "**********************************************"
 echo
 
-DEBIAN_FRONTEND=noninteractive
+#DEBIAN_FRONTEND=noninteractive
 
 echo -e "\n*** UPDATE Debian***"
 apt update -y
@@ -35,19 +35,19 @@ echo -e "\n*** Configuring Firewall ***"
 # https://www.codingforentrepreneurs.com/blog/hello-linux-nginx-and-ufw-firewall/
 ufw allow ssh
 ufw allow 'Nginx Full'
-ufw enable
+#ufw enable
 
 
 ## TOR
 # Install TOR
 # https://support.torproject.org/apt/
-apt install apt-transport-https
+apt install apt-transport-https -y
 touch /etc/apt/sources.list.d/tor.list
 echo "   deb     [signed-by=/usr/share/keyrings/tor-archive-keyring.gpg] https://deb.torproject.org/torproject.org bullseye main" >> /etc/apt/sources.list.d/tor.list
 echo "   deb-src [signed-by=/usr/share/keyrings/tor-archive-keyring.gpg] https://deb.torproject.org/torproject.org bullseye main" >> /etc/apt/sources.list.d/tor.list
 wget -qO- https://deb.torproject.org/torproject.org/A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89.asc | gpg --dearmor | tee /usr/share/keyrings/tor-archive-keyring.gpg >/dev/null
-apt update
-apt install tor deb.torproject.org-keyring
+apt update -y
+apt install tor deb.torproject.org-keyring -y
 sed '/HiddenServiceDir/s/^#//g' -i /etc/tor/torrc
 sed '/HiddenServicePort/s/^#//g' -i /etc/tor/torrc
 systemctl restart tor

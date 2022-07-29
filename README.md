@@ -45,12 +45,26 @@ ssh pi@<IP-of-your-RBP>
 ```
 
 Confirm by typing `yes` and enter the password `pi`.
+If you have logged in correctly it should look as follows:
 
 ![image](https://user-images.githubusercontent.com/92563141/181783475-493b6fdc-69c8-4238-a80d-98c68d3b0e81.png)
 
 
-## Build SD Card
+## Build SD Card automatically
+If you want setup everything by one command then run the following commands. In case you want to do it manually, follow steps in next section.
 
 ```bash
-wget https://raw.githubusercontent.com/nullen-einsen/zerone/main/build_sdcard.sh && sudo bash build_sdcard.sh
+wget https://raw.githubusercontent.com/nullen-einsen/zerone/main/setup.sh && sudo bash /home/pi/setup.sh
 ```
+
+## Build manually
+
+### Switch to root user and update software
+
+```bash
+sudo -su root
+sudo apt update -y
+sudo apt upgrade -f -y
+~~~
+
+

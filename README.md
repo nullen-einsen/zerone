@@ -32,10 +32,19 @@ Flash your SD Card with latest Raspberry OS (ARM 64bit Lite) [Tutorial](https://
 # Replace <hostname> by your setting
 ping <hostname>.local
 
-# If this does not work, scan the network and find the IP of the device with your hostname
-
+# If upper does not work use ifconfig and nmap as follows (Linux)
+ifconfig | grep netmask # to find out your subnetmask
+nmap -sn <subnetmask>.0/24
 ```
 
+## Connect to your RBP
+If you have found the IP address of your RBP you can connect via SSH:
+
+```bash
+ssh pi@<IP-of-your-RBP>
+```
+
+Confirm by typing `yes` and enter the password `pi`.
 
 ## Build SD Card
 

@@ -7,6 +7,8 @@
 # setup fresh SD card with image above - login per SSH and run this script:
 ##########################################################################
 
+export DEBIAN_FRONTEND=noninteractive
+
 sudo -su root
 
 echo "**********************************************"

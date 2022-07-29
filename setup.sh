@@ -48,20 +48,30 @@ sudo echo "   deb-src [signed-by=/usr/share/keyrings/tor-archive-keyring.gpg] ht
 wget -qO- https://deb.torproject.org/torproject.org/A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89.asc | gpg --dearmor | sudo tee /usr/share/keyrings/tor-archive-keyring.gpg >/dev/null
 sudo apt update -y
 sudo apt install tor deb.torproject.org-keyring -y
-sudo sed '/HiddenServiceDir/s/^#//g' -i /etc/tor/torrc
-sudo sed '/HiddenServicePort/s/^#//g' -i /etc/tor/torrc
+
+echo 'HiddenServiceDir /var/lib/tor/hidden_service/' | sudo tee -a /etc/tor/torrc
+echo 'HiddenServicePort 80 127.0.0.1:80' | sudo tee -a /etc/tor/torrc
+
+#sudo sed '/HiddenServiceDir/s/^#//g' -i /etc/tor/torrc
+#sudo sed '/HiddenServicePort/s/^#//g' -i /etc/tor/torrc
+
 sudo systemctl restart tor
 
 ## LCD SCREEN
 # prepare auto-start of qrinfo.sh script on pi user login
 bash -c 'echo "# automatic start the QR info loop" >> /home/pi/.bashrc'
+# Create QR code from onion url and save as png
+bash -c 'echo "sudo rm /home/pi/qr.png"'
+bash -c 'echo "sudo cat /var/lib/tor/hidden_service/hostname | sudo qrencode --foreground="ffffff" --background="000000" -o /home/pi/qr.png"'
+# load QR code into frame buffer
 bash -c 'echo "# load QR code into frame buffer" >> /home/pi/.bashrc'
 bash -c 'echo "sudo fbi -a -T 1 -d /dev/fb0 --noverbose /home/pi/qr.png 2> /dev/null" >> /home/pi/.bashrc'
 echo "autostart LCD added"
 
 ## QR CODE
 # Create QR code from onion url and save as png
-sudo cat /var/lib/tor/hidden_service/hostname | sudo qrencode --foreground="ffffff" --background="000000" -o /home/pi/qr.png
+#sudo rm /home/pi/qr.png
+#sudo cat /var/lib/tor/hidden_service/hostname | sudo qrencode --foreground="ffffff" --background="000000" -o /home/pi/qr.png
 
 # adding main user admin
 echo -e "\n*** ADDING MAIN USER admin ***"
@@ -107,8 +117,6 @@ sudo sed -i "s/^dtoverlay=.*//g" /boot/config.txt
 #echo "enable_uart=1" >> /boot/config.txt
 echo "dtoverlay=waveshare35a:rotate=90" | sudo tee -a /boot/config.txt
 sudo cp ./cmdline.txt /boot/
-
-
 
 
 

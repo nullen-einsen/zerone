@@ -48,13 +48,10 @@ sudo echo "   deb-src [signed-by=/usr/share/keyrings/tor-archive-keyring.gpg] ht
 wget -qO- https://deb.torproject.org/torproject.org/A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89.asc | gpg --dearmor | sudo tee /usr/share/keyrings/tor-archive-keyring.gpg >/dev/null
 sudo apt update -y
 sudo apt install tor deb.torproject.org-keyring -y
-
+# Standard Configuration
 echo 'HiddenServiceDir /var/lib/tor/hidden_service/' | sudo tee -a /etc/tor/torrc
 echo 'HiddenServicePort 80 127.0.0.1:80' | sudo tee -a /etc/tor/torrc
-
-#sudo sed '/HiddenServiceDir/s/^#//g' -i /etc/tor/torrc
-#sudo sed '/HiddenServicePort/s/^#//g' -i /etc/tor/torrc
-
+# Restart Tor Service
 sudo systemctl restart tor
 
 ## LCD SCREEN
@@ -68,7 +65,7 @@ bash -c 'echo "# load QR code into frame buffer" >> /home/pi/.bashrc'
 bash -c 'echo "sudo fbi -a -T 1 -d /dev/fb0 --noverbose /home/pi/qr.png 2> /dev/null" >> /home/pi/.bashrc'
 echo "autostart LCD added"
 
-## QR CODE
+## QR CODE (does not work on setup => move into .bashrc auto login)
 # Create QR code from onion url and save as png
 #sudo rm /home/pi/qr.png
 #sudo cat /var/lib/tor/hidden_service/hostname | sudo qrencode --foreground="ffffff" --background="000000" -o /home/pi/qr.png
@@ -118,11 +115,6 @@ sudo sed -i "s/^dtoverlay=.*//g" /boot/config.txt
 echo "dtoverlay=waveshare35a:rotate=90" | sudo tee -a /boot/config.txt
 sudo cp ./cmdline.txt /boot/
 
-
-
-# touch screen calibration
-#sudo apt-get install xserver-xorg-input-evdev -y
-#cp -rf /usr/share/X11/xorg.conf.d/10-evdev.conf /usr/share/X11/xorg.conf.d/45-evdev.conf
 # reboot
 echo "# OK install of LCD done ... reboot needed"
 sudo reboot

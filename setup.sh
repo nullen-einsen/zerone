@@ -61,8 +61,8 @@ sudo systemctl restart tor
 # prepare auto-start of qrinfo.sh script on pi user login
 bash -c 'echo "# automatic start the QR info loop" >> /home/pi/.bashrc'
 # Create QR code from onion url and save as png
-bash -c 'echo "sudo rm /home/pi/qr.png"'
-bash -c 'echo "sudo cat /var/lib/tor/hidden_service/hostname | sudo qrencode --foreground="ffffff" --background="000000" -o /home/pi/qr.png"'
+bash -c 'echo "sudo rm /home/pi/qr.png" >> /home/pi/.bashrc'
+bash -c 'echo "sudo cat /var/lib/tor/hidden_service/hostname | sudo qrencode --foreground="ffffff" --background="000000" -o /home/pi/qr.png" >> /home/pi/.bashrc'
 # load QR code into frame buffer
 bash -c 'echo "# load QR code into frame buffer" >> /home/pi/.bashrc'
 bash -c 'echo "sudo fbi -a -T 1 -d /dev/fb0 --noverbose /home/pi/qr.png 2> /dev/null" >> /home/pi/.bashrc'

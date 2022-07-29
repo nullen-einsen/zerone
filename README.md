@@ -46,6 +46,9 @@ ssh pi@<IP-of-your-RBP>
 
 Confirm by typing `yes` and enter the password `pi`.
 
+![image](https://user-images.githubusercontent.com/92563141/181783475-493b6fdc-69c8-4238-a80d-98c68d3b0e81.png)
+
+
 ## Build SD Card
 
 ```bash

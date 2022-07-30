@@ -59,12 +59,23 @@ wget https://raw.githubusercontent.com/nullen-einsen/zerone/main/setup.sh && sud
 
 ## Build manually
 
-### Switch to root user and update software
+### Update System
 
 ```bash
-sudo -su root
 sudo apt update -y
 sudo apt upgrade -f -y
-~~~
+```
 
+### Install Software
 
+```bash
+sudo apt install \
+      git-all \
+      nginx \
+      ufw \
+      qrencode \
+      fbi \
+      -y
+```
+
+tbd..
